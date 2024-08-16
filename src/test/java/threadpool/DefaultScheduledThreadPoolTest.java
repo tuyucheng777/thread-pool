@@ -12,15 +12,15 @@ import java.util.concurrent.CountDownLatch;
 
 class DefaultScheduledThreadPoolTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultScheduledThreadPoolTest.class);
+   private static final Logger logger = LoggerFactory.getLogger(DefaultScheduledThreadPoolTest.class);
 
-    @Test
-    void scheduledTasks() throws Exception {
-        final PrometheusMeterRegistry meterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-        final ThreadPool executor = ThreadPool.builder(3)
-                .metrics(meterRegistry, "mytest.threadpool", Tag.of("foo", "bar"))
-                .build();
-        final CountDownLatch latch = new CountDownLatch(1);
+   @Test
+   void scheduledTasks() throws Exception {
+      final PrometheusMeterRegistry meterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+      final ThreadPool executor = ThreadPool.builder(3)
+            .metrics(meterRegistry, "mytest.threadpool", Tag.of("foo", "bar"))
+            .build();
+      final CountDownLatch latch = new CountDownLatch(1);
 //        final CompletableFuture<String> f = executor.scheduleAtFixedRate(() -> {
 //            logger.info("Task is run. {}", System.currentTimeMillis());
 //            try {
@@ -34,9 +34,9 @@ class DefaultScheduledThreadPoolTest {
 //        Thread.sleep(5700);
 //        executor.shutdown();
 //        logger.info(f.get());
-        executor.execute(() -> System.err.println("EXECUTED!"));
-        executor.shutdown();
-        executor.awaitTermination();
-        logger.info("\n{}", meterRegistry.scrape());
-    }
+      executor.execute(() -> System.err.println("EXECUTED!"));
+      executor.shutdown();
+      executor.awaitTermination();
+      logger.info("\n{}", meterRegistry.scrape());
+   }
 }
